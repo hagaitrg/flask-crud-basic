@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Palette+Mosaic&display=swap");
+
+.app-name {
+  font-family: "Palette Mosaic", cursive;
+}
+
+.auth-card {
+  -webkit-box-shadow: 10px 10px 0px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 0px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 10px 0px 0px rgba(0, 0, 0, 0.75);
+}
+
+.auth-button {
+  -webkit-box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.75);
+}
