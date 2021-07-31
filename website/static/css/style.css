@@ -1,7 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Palette+Mosaic&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sigmar+One&display=swap");
 
 .app-name {
-  font-family: "Palette Mosaic", cursive;
+  font-family: "Sigmar One", cursive;
+  /* text-shadow: 3px 3px black; */
 }
 
 .auth-card {
@@ -14,4 +15,11 @@
   -webkit-box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.75);
   box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.75);
+}
+
+.input-group-prepend {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
 }
