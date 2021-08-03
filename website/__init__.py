@@ -21,7 +21,7 @@ def create_app():
     app.register_blueprint(auth, url_prefix="/")
 
     # memanggil models user
-    from .models import User
+    from .models import User, Posts
 
     create_database(app)
 
