@@ -29,7 +29,7 @@ def login():
             flash('Email doest not exist!', category='error')
 
 
-    return render_template("login.html")
+    return render_template("login.html", user=current_user)
 
 @auth.route("/register" , methods=["POST", "GET"])
 def register():
@@ -66,9 +66,9 @@ def register():
             flash('User created!', category='success')
             return redirect(url_for('views.home'))
     
-    return render_template("register.html")
+    return render_template("register.html", user=current_user)
 
-@auth.route("/log-out")
+@auth.route("/logout")
 
 # harus login sebelum mengeksekusi fungsi logout
 @login_required

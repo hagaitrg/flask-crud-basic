@@ -5,8 +5,7 @@ views = Blueprint("views", __name__)
 
 @views.route("/")
 @views.route("/home")
-@login_required
 def home():
     # menggunakan templating jinja 
-    return render_template("home.html", name=current_user.name)
+    return render_template("home.html", user = current_user)
 
