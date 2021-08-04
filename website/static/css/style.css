@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Sigmar+One&display=swap");
 
-.app-name {
+.app-name,
+.my-post {
   font-family: "Sigmar One", cursive;
   /* text-shadow: 3px 3px black; */
 }

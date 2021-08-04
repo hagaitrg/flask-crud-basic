@@ -1,4 +1,57 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
+{% extends "base.html" %} {% block title %}{{username}},s Posts{% endblock %} {% block content %}
 
-<h1>Hello this is test</h1>
+<div class="d-flex justify-content-center mb-5">
+  <div class="row">
+    <img src="{{ url_for('static',filename='img/logo.png') }}" height="150" width="50" />
+    <h3 class="text-center my-post"><strong>My Posts</strong></h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-4">
+    <div class="card border border-2 border-dark bg-info text-white card-post">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-item-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+          </svg>
+          <div class="row">
+            <h5 class="card-title">{{username}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{user.email}}</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-8">
+    {% for post in posts %}
+    <div class="card rounded-start border border-dark mb-3">
+      <div class="card-header bg-warning border-dark text-left text-white d-flex justify-content-between align-item-center">
+        <strong
+          ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+          </svg>
+          <a href="/posts/{{username}}" class="text-light">{{username}}</a></strong
+        >
+
+        {% if user.id == post.author %}
+        <div class="dropdown">
+          <button class="btn dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="/delete-post/{{post.id}}">Delete</a></li>
+            <li><a class="dropdown-item" href="/edit-post/{{post.id}}">Edit</a></li>
+          </ul>
+        </div>
+        {% endif %}
+      </div>
+      <div class="card-body">
+        <p class="card-text">{{post.post}}</p>
+      </div>
+      <div class="card-footer text-muted border-dark text-end">{{post.date_created}}</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}
