@@ -10,8 +10,9 @@ views = Blueprint("views", __name__)
 @views.route("/")
 @views.route("/home")
 def home():
+    posts = Posts.query.all()
     # menggunakan templating jinja 
-    return render_template("home.html", user = current_user)
+    return render_template("home.html", user = current_user, posts = posts)
 
 @views.route("/create-post", methods=["POST"])
 @login_required

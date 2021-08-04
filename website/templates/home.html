@@ -28,7 +28,7 @@
 {% endif %} {% endfor %} {% endif %} {% endwith %}
 <div class="d-flex justify-content-center">
   <div class="col-sm-6">
-    <div class="card rounded-start border border-dark card-post">
+    <div class="card rounded-start border border-dark card-post mb-5">
       <div class="card-header bg-info border-dark text-center text-white"><strong>={ Make a Post }=</strong></div>
       <div class="card-body border">
         <form method="POST" action="/create-post">
@@ -46,13 +46,31 @@
           <hr class="border border-2 border-dark" />
           <div class="row">
             <div class="col-sm-10 mb-2">
-              <input class="form-control form-control-sm mb-2 rounded-pill" id="formFileSm" type="file" />
+              <input class="form-control form-control-sm mb-2 rounded-pill bg-secondary text-white" id="formFileSm" type="file" />
             </div>
             <div class="col-sm-2"><button type="submit" class="btn btn-outline-info rounded-pill">Post</button></div>
           </div>
         </form>
       </div>
     </div>
+
+    {% for post in posts %}
+    <div class="card rounded-start border border-dark mb-3">
+      <div class="card-header bg-warning border-dark text-left text-white">
+        <strong
+          ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+          </svg>
+          <a href="/posts/{{post.user.name}}" class="text-light">{{post.user.name}}</a></strong
+        >
+      </div>
+      <div class="card-body">
+        <p class="card-text">{{post.post}}</p>
+      </div>
+      <div class="card-footer text-muted border-dark text-end">{{post.date_created}}</div>
+    </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}
