@@ -1,3 +1,4 @@
+from website import auth
 from flask import Blueprint,  render_template, request
 from flask.helpers import flash, url_for
 from flask_login import login_required, current_user
@@ -42,6 +43,34 @@ def delete_post(id):
         db.session.commit()
         flash('Post deleted', category='success')
     return redirect(url_for('views.home'))
+
+@views.route("/edit-post/<id>")
+@login_required
+def edit_post(id):
+    post = Posts.query.filter_by(id=id).first()
+    if not post:
+        flash('Post does not exist!', category='error')
+    elif current_user.id != post.author:
+        flash('You do not have permission to edit this post!', category='error')
+    else:
+        return render_template("edit_post.html", user=current_user, post = post)
+
+@views.route("/update-post/<id>", methods=["POST", "GET"])
+@login_required
+def update_post(id):
+    if request.method == "POST":
+        p = Posts.query.filter_by(id=id).first()
+        text = request.form.get('post')
+        author = current_user.id
+
+        if text:
+            # fixed by jeddenkah 
+            p.post = text
+            p.author = author
+            db.session.commit()
+            flash('Post Edited!', category='success')
+            return redirect(url_for("views.home"))
+
 
 @views.route("/posts/<username>")
 @login_required
