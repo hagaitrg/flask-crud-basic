@@ -108,7 +108,7 @@ def delete_comment(id):
 
     if not comment:
         flash('Comment does not exist!', category='error')
-    elif current_user.id != comment.author:
+    elif current_user.id != comment.author and current_user.id != comment.posts.author:
         flash('You do not have permission to delete this comment!', category='error')
     else:
         db.session.delete(comment)

@@ -77,6 +77,7 @@
                 {{comment.user.name}}
               </h6>
             </div>
+            {% if user.id == comment.author or user.id == post.author %}
             <div class="dropdown">
               <button class="btn btn-sm text-dark" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 <strong>
@@ -85,10 +86,10 @@
                 ></strong>
               </button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="/delete-post/{{post.id}}">Delete</a></li>
-                <li><a class="dropdown-item" href="/edit-post/{{post.id}}">Edit</a></li>
+                <li><a class="dropdown-item" href="/delete-comment/{{comment.id}}">Delete</a></li>
               </ul>
             </div>
+            {% endif %}
           </div>
           <div class="d-flex justify-content-between">
             <p class="card-text">{{comment.text}}</p>
