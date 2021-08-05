@@ -4,7 +4,7 @@ from flask.helpers import flash, url_for
 from flask_login import login_required, current_user
 from sqlalchemy.sql.functions import user
 from werkzeug.utils import redirect
-from .models import Posts, User
+from .models import Comments, Posts, User
 from . import db 
 
 views = Blueprint("views", __name__)
@@ -80,8 +80,23 @@ def posts(username):
     if not user:
         flash('Username does not exist', category='error')
         return redirect(url_for('views.home'))
-    post = Posts.query.filter_by(author = user.id).all()
+    post = user.posts
     return render_template("posts.html", user=current_user, posts = post, username = username)
 
+@views.route("/create-comment/<post_id>", methods=["GET", "POST"])
+@login_required
+def create_commnet(post_id):
+    text = request.form.get('text')
 
+    if not text:
+        flash('Comment cannot be empty!', category="error")
+    else:
+        post = Posts.query.filter_by(id = post_id)
+        if post:
+            comment = Comments(text=text, author = current_user.id, post_id = post_id)
+            db.session.add(comment)
+            db.session.commit()
+        else:
+            flash('post dsoes not exists!', category="error")
 
+    return redirect(url_for('views.home'))

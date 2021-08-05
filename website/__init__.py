@@ -20,8 +20,8 @@ def create_app():
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
 
-    # memanggil models user
-    from .models import User, Posts
+    # memanggil modelsss
+    from .models import User, Posts, Comments
 
     create_database(app)
 

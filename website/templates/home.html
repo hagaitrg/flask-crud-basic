@@ -32,11 +32,11 @@
       <div class="card-header bg-info border-dark text-center text-white"><strong>={ Make a Post }=</strong></div>
       <div class="card-body border">
         <form method="POST" action="/create-post">
-          <div class="row">
+          <div class="d-flex justify-content-between align-item-center">
             <div class="col-sm-10">
               <textarea class="form-control rounded-pill" placeholder="What's on your mind dude ?" id="post" name="post" rows="2" required></textarea>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-2 ms-1">
               <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle text-info" viewBox="0 0 16 16">
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
@@ -77,6 +77,32 @@
       </div>
       <div class="card-body">
         <p class="card-text">{{post.post}}</p>
+        <hr class="border border-2 border-dark" />
+        {% for comment in post.comments %}
+        <h6 class="card-subtitle mb-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+          </svg>
+          {{comment.user.name}}
+        </h6>
+        <div class="d-flex justify-content-between align-item-center">
+          <p class="card-text">{{comment.text}}</p>
+          <p class="card-text text-muted">{{comment.date_created}}</p>
+        </div>
+        <hr />
+        {% endfor %}
+        <form method="POST" action="/create-comment/{{post.id}}" class="d-flex justify-content-between align-item-center">
+          <div class="col-sm-11">
+            <input type="text" class="form-control rounded-pill" id="text" name="text" placeholder="Comment..." />
+          </div>
+          <div class="col-sm-1">
+            <button type="submit" class="btn btn-primary rounded-circle ms-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-symmetry-horizontal" viewBox="0 0 16 16">
+                <path d="M13.5 7a.5.5 0 0 0 .24-.939l-11-6A.5.5 0 0 0 2 .5v6a.5.5 0 0 0 .5.5h11zm.485 2.376a.5.5 0 0 1-.246.563l-11 6A.5.5 0 0 1 2 15.5v-6a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .485.376zM11.539 10H3v4.658L11.54 10z" />
+              </svg>
+            </button>
+          </div>
+        </form>
       </div>
       <div class="card-footer text-muted border-dark text-end">{{post.date_created}}</div>
     </div>

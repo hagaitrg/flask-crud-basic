@@ -11,6 +11,7 @@ class User(db.Model, UserMixin):
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     # membuat relationship one to Many ke table Posts
     posts = db.relationship('Posts', backref='user', passive_deletes=True)
+    comments = db.relationship('Comments', backref='user', passive_deletes=True)
     
 
 class Posts(db.Model):
@@ -18,4 +19,13 @@ class Posts(db.Model):
     post = db.Column(db.Text, nullable=False)
     # membuat foreign key untuk id user penulis
     author = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    comments = db.relationship('Comments', backref='posts', passive_deletes=True)
+
+class Comments(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(200), nullable=False)
+    # membuat foreign key untuk id user penulis dan post
+    author = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id', ondelete="CASCADE"), nullable=False)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
