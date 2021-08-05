@@ -100,3 +100,18 @@ def create_commnet(post_id):
             flash('post dsoes not exists!', category="error")
 
     return redirect(url_for('views.home'))
+
+@views.route("/delete-comment/<id>")
+@login_required
+def delete_comment(id):
+    comment = Comments.query.filter_by(id=id).first()
+
+    if not comment:
+        flash('Comment does not exist!', category='error')
+    elif current_user.id != comment.author:
+        flash('You do not have permission to delete this comment!', category='error')
+    else:
+        db.session.delete(comment)
+        db.session.commit()
+        flash('Comment deleted', category='success')
+    return redirect(url_for('views.home'))

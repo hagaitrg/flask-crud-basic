@@ -1,3 +1,4 @@
+from typing import cast
 from website import views
 from flask import Blueprint, render_template, redirect, url_for,request, flash
 from . import db
@@ -27,7 +28,6 @@ def login():
                 flash('Password is incorrect!', category='error')
         else:
             flash('Email doest not exist!', category='error')
-
 
     return render_template("login.html", user=current_user)
 

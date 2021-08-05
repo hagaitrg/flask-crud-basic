@@ -2,14 +2,14 @@
 
 <div class="d-flex justify-content-center mb-5">
   <div class="row">
-    <img src="{{ url_for('static',filename='img/logo.png') }}" height="150" width="50" />
-    <h3 class="text-center my-post"><strong>My Posts</strong></h3>
+    <img src="{{ url_for('static',filename='img/logo.png') }}" height="150" width="100" />
+    <h3 class="text-center text-light my-post"><strong>My Posts</strong></h3>
   </div>
 </div>
 
 <div class="row">
   <div class="col-sm-4">
-    <div class="card border border-2 border-dark bg-info text-white card-post">
+    <div class="card border border-3 border-light bg-info text-white card-post mb-5">
       <div class="card-body">
         <div class="d-flex justify-content-between align-item-center">
           <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -26,19 +26,26 @@
   </div>
   <div class="col-sm-8">
     {% for post in posts %}
-    <div class="card rounded-start border border-dark mb-3">
-      <div class="card-header bg-warning border-dark text-left text-white d-flex justify-content-between align-item-center">
-        <strong
-          ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-          </svg>
-          <a href="/posts/{{username}}" class="text-light">{{username}}</a></strong
-        >
+    <div class="card rounded-start border border-3 border-light mb-3">
+      <div class="card-header bg-warning border-light text-left text-white d-flex justify-content-between">
+        <div class="d-flex align-items-center">
+          <strong
+            ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle text-dark" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+            </svg>
+            <a href="/posts/{{post.user.name}}" class="text-dark">{{post.user.name}}</a></strong
+          >
+        </div>
 
         {% if user.id == post.author %}
         <div class="dropdown">
-          <button class="btn dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
+          <button class="btn btn-sm text-dark" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <strong>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" /></svg
+            ></strong>
+          </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li><a class="dropdown-item" href="/delete-post/{{post.id}}">Delete</a></li>
             <li><a class="dropdown-item" href="/edit-post/{{post.id}}">Edit</a></li>
@@ -47,27 +54,55 @@
         {% endif %}
       </div>
       <div class="card-body">
-        <p class="card-text">{{post.post}}</p>
-        <hr class="border border-2 border-dark" />
-        s {% for comment in post.comments %}
-        <h6 class="card-subtitle mb-2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
-          </svg>
-          {{comment.user.name}}
-        </h6>
-        <div class="d-flex justify-content-between align-item-center">
-          <p class="card-text">{{comment.text}}</p>
-          <p class="card-text text-muted">{{comment.date_created}}</p>
+        <div class="d-flex justify-content-between">
+          <p class="card-text">{{post.post}}</p>
+          <div class="d-flex align-items-center">
+            <small class="text-muted"> {{post.date_created}}</small>
+          </div>
         </div>
-        <hr />
+        <hr class="border border-2 border-dark" />
+        {% if post.comments| length > 0 %}
+        <a data-bs-toggle="collapse" href="#comments-{{post.id}}" class="btn btn-transparent">
+          <small>View {{post.comments|length}} Comments</small>
+        </a>
+        {% else %} {% endif %} {% for comment in post.comments %}
+        <div class="collapse" id="comments-{{post.id}}">
+          <hr />
+          <div class="d-flex justify-content-between">
+            <div class="d-flex align-items-center">
+              <h6 class="card-subtitle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                </svg>
+                {{comment.user.name}}
+              </h6>
+            </div>
+            <div class="dropdown">
+              <button class="btn btn-sm text-dark" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <strong>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                    <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" /></svg
+                ></strong>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="/delete-post/{{post.id}}">Delete</a></li>
+                <li><a class="dropdown-item" href="/edit-post/{{post.id}}">Edit</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between">
+            <p class="card-text">{{comment.text}}</p>
+            <small class="text-muted">{{comment.date_created}}</small>
+          </div>
+          <hr />
+        </div>
         {% endfor %}
         <form method="POST" action="/create-comment/{{post.id}}" class="d-flex justify-content-between align-item-center">
           <div class="col-sm-11">
-            <input type="text" class="form-control rounded-pill" id="text" name="text" placeholder="Comment..." />
+            <input type="text" class="form-control rounded-pill mt-2" id="text" name="text" placeholder="Comment..." />
           </div>
           <div class="col-sm-1">
-            <button type="submit" class="btn btn-primary rounded-circle ms-2">
+            <button type="submit" class="btn btn-primary rounded-circle ms-2 mt-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-symmetry-horizontal" viewBox="0 0 16 16">
                 <path d="M13.5 7a.5.5 0 0 0 .24-.939l-11-6A.5.5 0 0 0 2 .5v6a.5.5 0 0 0 .5.5h11zm.485 2.376a.5.5 0 0 1-.246.563l-11 6A.5.5 0 0 1 2 15.5v-6a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .485.376zM11.539 10H3v4.658L11.54 10z" />
               </svg>
@@ -75,7 +110,6 @@
           </div>
         </form>
       </div>
-      <div class="card-footer text-muted border-dark text-end">{{post.date_created}}</div>
     </div>
     {% endfor %}
   </div>
